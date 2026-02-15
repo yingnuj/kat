@@ -3,4 +3,5 @@
 *.pyc
 .cache
 .vscode
+/.venv/
 /build/
