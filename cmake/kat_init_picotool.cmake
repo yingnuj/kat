@@ -1,4 +1,8 @@
 function(kat_init_picotool)
+  set(picotool_BUILD_TARGET picotoolBuild)
+  set(picotool_TARGET picotool)
+  set(picotool_INSTALL_DIR ${CMAKE_SOURCE_DIR}/tools)
+
   find_program(picotool_EXECUTABLE picotool
                HINTS ${CMAKE_SOURCE_DIR}/tools/picotool)
   if(NOT picotool_EXECUTABLE AND NOT TARGET picotool)
@@ -6,12 +10,8 @@ function(kat_init_picotool)
       "picotool not found - configuring to build and install picotool from source"
     )
 
-    set(picotool_BUILD_TARGET picotoolBuild)
-    set(picotool_TARGET picotool)
-
     set(picotool_SOURCE_DIR ${CMAKE_SOURCE_DIR}/third_party/picotool)
     set(picotool_BINARY_DIR ${CMAKE_BINARY_DIR}/picotool/picotool-build)
-    set(picotool_INSTALL_DIR ${CMAKE_SOURCE_DIR}/tools)
 
     add_custom_target(
       picotoolForceReconfigure
@@ -34,14 +34,13 @@ function(kat_init_picotool)
                  "-DCMAKE_INSTALL_MESSAGE=NEVER" # quieten the install
       BUILD_ALWAYS 1 # force dependency checking
       EXCLUDE_FROM_ALL TRUE)
-
-    set(picotool_EXECUTABLE ${picotool_INSTALL_DIR}/picotool/picotool)
-    add_executable(${picotool_TARGET} IMPORTED GLOBAL)
-    set_property(TARGET ${picotool_TARGET} PROPERTY IMPORTED_LOCATION
-                                                    ${picotool_EXECUTABLE})
-    add_dependencies(${picotool_TARGET} ${picotool_BUILD_TARGET})
   else()
     message(
       "picotool found at ${picotool_EXECUTABLE} - skipping picotool build")
   endif()
+  set(picotool_EXECUTABLE ${picotool_INSTALL_DIR}/picotool/picotool)
+  add_executable(${picotool_TARGET} IMPORTED GLOBAL)
+  set_property(TARGET ${picotool_TARGET} PROPERTY IMPORTED_LOCATION
+                                                  ${picotool_EXECUTABLE})
+  add_dependencies(${picotool_TARGET} ${picotool_BUILD_TARGET})
 endfunction(kat_init_picotool)
