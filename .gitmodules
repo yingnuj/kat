@@ -10,3 +10,6 @@
 [submodule "third_party/clang-format"]
 	path = third_party/clang-format
 	url = https://chromium.googlesource.com/external/github.com/llvm/llvm-project/clang/tools/clang-format.git
+[submodule "third_party/jinja"]
+	path = third_party/jinja
+	url = https://github.com/pallets/jinja.git
