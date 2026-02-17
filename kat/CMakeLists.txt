@@ -1,13 +1,11 @@
-add_executable(blink
-    blink.c
-    )
+add_executable(spi_dma spi_dma.c)
 
-# pull in common dependencies
-target_link_libraries(blink pico_stdlib)
+target_link_libraries(spi_dma pico_stdlib hardware_spi hardware_dma
+                      hardware_irq)
 
-if (PICO_CYW43_SUPPORTED)
-    target_link_libraries(blink pico_cyw43_arch_none)
-endif()
+# enable usb output, disable uart output
+pico_enable_stdio_usb(spi_dma 1)
+pico_enable_stdio_uart(spi_dma 0)
 
 # create map/bin/hex file etc.
-pico_add_extra_outputs(blink)
+pico_add_extra_outputs(spi_dma)
