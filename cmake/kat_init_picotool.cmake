@@ -24,6 +24,7 @@ function(kat_init_picotool)
       SOURCE_DIR ${picotool_SOURCE_DIR}
       BINARY_DIR ${picotool_BINARY_DIR}
       INSTALL_DIR ${picotool_INSTALL_DIR}
+      DEPENDS picotoolForceReconfigure
       CMAKE_ARGS "--no-warn-unused-cli"
                  "-DCMAKE_MAKE_PROGRAM:FILEPATH=${CMAKE_MAKE_PROGRAM}"
                  "-DPICO_SDK_PATH:FILEPATH=${PICO_SDK_PATH}"
